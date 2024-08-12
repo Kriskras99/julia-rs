@@ -1,9 +1,9 @@
-
-extern crate julia_sys;
-
-use julia_sys::*;
-
 use std::ffi::CStr;
+
+use julia_sys::{
+    jl_atexit_hook, jl_eval_string, jl_exception_occurred, jl_init, jl_is_initialized,
+    jl_typeof_str,
+};
 
 unsafe fn cstr_as_string(mut string: *const i8) -> String {
     let mut ret = String::new();

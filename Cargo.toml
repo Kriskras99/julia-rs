@@ -1,34 +1,18 @@
-[package]
-name = "julia"
-version = "0.2.6"
-edition = "2015"
+[workspace]
+members = [
+    "julia-rs",
+    "julia-sys",
+]
 
-authors = ["Szymon Walter <walter.szymon.98@gmail.com>"]
-license = "Zlib"
-readme = "README.md"
-keywords = ["julia", "lang", "scripting", "script"]
-repository = "https://github.com/pi-pi3/julia-rs"
-homepage = "https://github.com/pi-pi3/julia-rs"
-documentation = "https://docs.rs/julia"
-categories = ["api-bindings"]
-description = """
-Idiomatic and safe Julia bindings for Rust
-"""
+resolver = "2"
 
-[dependencies]
-libc = "0.2"
-smallvec = "0.5"
-colored = "1.6"
-redox_liner = "0.5.1"
-clap = "2.25"
+[workspace.dependencies]
+bindgen = { version = "0.69.4" }
+clap = { version = "4.5.11", features = ["derive"] }
+flate2 = { version = "1.0.30" }
+libc = { version = "0.2.155" }
+smallvec = { version = "1.13.2", features = ["union", "const_generics", "const_new"] }
 
-[dependencies.julia-sys]
-version = "0.2"
-path = "julia-sys"
-
-[[bin]]
-name = "julia-rs"
-path = "src/main.rs"
-
-[toolchain]
-channel = "nightly"
+[profile.release]
+lto = "fat"
+codegen-units = 1

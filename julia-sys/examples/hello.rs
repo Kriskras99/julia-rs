@@ -1,9 +1,8 @@
-
-extern crate julia_sys;
-
-use julia_sys::*;
-
 use std::ffi::CStr;
+
+use julia_sys::{
+    jl_atexit_hook, jl_eval_string, jl_exception_occurred, jl_init, jl_is_initialized,
+};
 
 fn main() {
     unsafe {

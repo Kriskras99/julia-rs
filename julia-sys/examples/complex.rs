@@ -1,9 +1,9 @@
-
-extern crate julia_sys;
-
-use julia_sys::*;
-
 use std::ffi::CStr;
+
+use julia_sys::{
+    jl_atexit_hook, jl_box_float64, jl_call1, jl_eval_string, jl_exception_occurred,
+    jl_float64_type, jl_init, jl_is_initialized, jl_typeis, jl_unbox_float64, jl_value_t,
+};
 
 unsafe fn eval(string: &str) -> *mut jl_value_t {
     let bytes = string.as_bytes();
@@ -26,7 +26,7 @@ fn main() {
 
         let ret = jl_call1(f, x);
 
-        let y = if jl_is_float64(ret) {
+        let y = if jl_typeis(ret, jl_float64_type) {
             jl_unbox_float64(ret)
         } else {
             panic!("f is not a Float64")
